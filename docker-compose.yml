@@ -31,6 +31,8 @@ services:
     entrypoint: ./scripts/wait.sh db:5432 -- npm start
     volumes:
       - ./releases:/usr/src/electron-release-server/releases
+    networks:
+      - localnet
 
   db:
     image: postgres:11
@@ -39,6 +41,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres:/var/lib/postgresql/data
+    networks:
+      - localnet
 
 volumes:
   postgres:
+
+networks:
+  localnet:
+    driver: bridge
